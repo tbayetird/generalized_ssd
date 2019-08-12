@@ -36,33 +36,61 @@ This repository doesn't work out of the box ; you'll have to get the ssd impleme
 After this operation, your repository should look like this (folders only):
 .
 ├── Configurations
+
 │   ├── config_base_models
+
 │   ├── config_datas
+
 │   └── config_models
+
 ├── Dataset Formatting
+
 │   └── labelimg
+
 │       └── data
+
 ├── Inference
+
 ├── Training
+
 └──\_src
+
     ├── bounding_box_utils
+
     ├── data_generator
+
     ├── eval_utils
+
     ├── example
+
     ├── inference_utils
+
     ├── keras_layers
+
     ├── keras_loss_function
+
     ├── misc_utils
+
     ├── models
+
     ├── outputs
+
     ├── ssd_encoder_decoder
+
     ├── test_utils
+
     ├── train_utils
+
     ├── unit_tests
+
     ├── utils
+
     │   └── labelimg
+
     │       └── data
+
     └── weights
+
 
 There, you're ready. Be warry of the fact that some calls between files are hardcoded in the scripts. If you ever modifiy this architecture, you might break the calls and get errors. Do this only if you know what you're doing.
 
@@ -130,35 +158,65 @@ Your images need to be organized in a proper way so that the configurations can 
 First, get all your images in a folder. For this example, we'll use the \_src/example folder :
 
 example/
+
     ├── 000019.jpg
+
     ├── 000044.jpg
+
     ├── 000122.jpg
+
     ├── 000158.jpg
+
     ├── 000215.jpg
+
     ├── 000241.jpg
+
     ├── 000242.jpg
+
     ├── 000325.jpg
+
     ├── 000400.jpg
+
     ├── 000528.jpg
+
     ├── 000605.jpg
+
     ├── 000619.jpg
+
     ├── 000876.jpg
+
     ├── 000908.jpg
+
     ├── 000912.jpg
+
     ├── 001001.jpg
+
     ├── 001015.jpg
+
     ├── 001072.jpg
+
     ├── 001156.jpg
+
     ├── 001233.jpg
+
     ├── 001260.jpg
+
     ├── 001553.jpg
+
     ├── 001607.jpg
+
     ├── 001669.jpg
+
     ├── 001732.jpg
+
     ├── 001747.jpg
+
     ├── 001888.jpg
+
     ├── 001927.jpg
+
     ├── 001982.jpg
+
     └── 002067.jpg
 
 Those are images extracted from the PascalVOC 2007 devkit. They are not yet under the PascalVOC architecture though. This architecture need :
