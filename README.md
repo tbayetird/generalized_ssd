@@ -202,6 +202,8 @@ The base model configuration is as it follows :
 - IMG_SHAPE = [300,300,3]
 - CLASSES = ['background','cat']
 
+Description for these categories are below :
+
 - The PATH leads to the base model weights, i.e the ones you've downloaded (or just use the examples ones)
 - The IMG_SHAPE is the shape of the images that are used for training. It depends on the network, and those images are of size 300x300 with colors (r,g,b) in our example.
 - The CLASSES corresponds to the initial CLASSES for the base_model. But it's not really usefull here.
@@ -225,17 +227,18 @@ The data configuration is as follows :
 - BATCH_SIZE=16
 - TEST_BATCH_SIZE = 1
 
+Description for these categories are below :
 
--DATA_DIR corresponds to the folder containing your data.
--IM_DIR is the folder containing the images
--SETS_DIR is the folder containing the sets
--LABELS_DIR is the folder containing the labels.
--CHECKPOINT_NAME is the name the intermediary model should be named with. The
+- DATA_DIR corresponds to the folder containing your data.
+- IM_DIR is the folder containing the images
+- SETS_DIR is the folder containing the sets
+- LABELS_DIR is the folder containing the labels.
+- CHECKPOINT_NAME is the name the intermediary model should be named with. The
 intermediary model is the state of the weights after each epoch.
--MODEL_NAME is the name of the model that will be saved after training
--EPOCHS : number of epochs
--BATCH_SIZE : size of the batch for training
--TEST_BATCH_SIZE : size of batch size when testing.
+- MODEL_NAME is the name of the model that will be saved after training
+- EPOCHS : number of epochs
+- BATCH_SIZE : size of the batch for training
+- TEST_BATCH_SIZE : size of batch size when testing.
 
 Once your configurations are set up, you can go through training and using your models.  
 
