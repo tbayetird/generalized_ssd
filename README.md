@@ -184,9 +184,9 @@ To label your data, use the label_img executable in the labelimg folder. This ap
 
 Launch the application ; open your images folder (in our case, \_src/example/Images) ; change the save directory to where you want to export your labels (in our case : \_src/example/Annotations)
 
-For each image, create a new rect for each object you want to detect. In our case, we're gonna build a cat detector, so we're labelling our images as follow :
+<!-- For each image, create a new rect for each object you want to detect. In our case, we're gonna build a cat detector, so we're labelling our images as follow :
 
-[INSERT IMAGE HERE]
+[INSERT IMAGE HERE] -->
 
 Be sure to verify every image, even those without any annotation, or when training you'll have errors (press space bar to verify image after you're done annotating with rectangles)
 
@@ -197,43 +197,45 @@ Once you're done, you can close the application and go to the next step.
 The configurations are the most important part here. Everything, from training through inference, is done thanks to the configurations. Be warry to set them up correctly.
 
 The base model configuration is as it follows :
-PATH = 'Path_to_generalized_ssd\\\_src\\models\\base_model_example.h5'
-IMG_SHAPE = [300,300,3]
-CLASSES = ['background','cat']
 
-The PATH leads to the base model weights, i.e the ones you've downloaded (or just use the examples ones)
-The IMG_SHAPE is the shape of the images that are used for training. It depends on the network, and those images are of size 300x300 with colors (r,g,b) in our example.
-The CLASSES corresponds to the initial CLASSES for the base_model. But it's not really usefull here.
+- PATH = 'Path_to_generalized_ssd\\\_src\\models\\base_model_example.h5'
+- IMG_SHAPE = [300,300,3]
+- CLASSES = ['background','cat']
+
+- The PATH leads to the base model weights, i.e the ones you've downloaded (or just use the examples ones)
+- The IMG_SHAPE is the shape of the images that are used for training. It depends on the network, and those images are of size 300x300 with colors (r,g,b) in our example.
+- The CLASSES corresponds to the initial CLASSES for the base_model. But it's not really usefull here.
 
 
 The model configuration is as it follows :
-PATH = 'Path_to_generalized_ssd\\\_src\\models\\model_example.h5'
-IMG_SHAPE = [300,300,3]
-CLASSES = ['background','cat']
+- PATH = 'Path_to_generalized_ssd\\\_src\\models\\model_example.h5'
+- IMG_SHAPE = [300,300,3]
+- CLASSES = ['background','cat']
 
 The configuration is roughly the same as the base model, except you should put here the classes you want to train your model to detect. Beware, always include background as a classe.
-
-
 The data configuration is as follows :
-DATA_DIR = 'Path_to_generalized_ssd\\\_src\\example\\'
-IM_DIR = os.path.join(DATA_DIR,'Images')
-SETS_DIR = os.path.join(DATA_DIR,'ImageSets')
-LABELS_DIR = os.path.join(DATA_DIR,'Annotations')
-CHECKPOINT_NAME= 'example_model_checkpoint.h5'
-MODEL_NAME = 'example_model.h5'
-EPOCHS= 40
-BATCH_SIZE=16
-TEST_BATCH_SIZE = 1
 
-DATA_DIR corresponds to the folder containing your data.
-IM_DIR is the folder containing the images
-SETS_DIR is the folder containing the sets
-LABELS_DIR is the folder containing the labels.
-CHECKPOINT_NAME is the name the intermediary model should be named with. The intermediary model is the state of the weights after each epoch.
-MODEL_NAME is the name of the model that will be saved after training
-EPOCHS : number of epochs
-BATCH_SIZE : size of the batch for training
-TEST_BATCH_SIZE : size of batch size when testing.
+- DATA_DIR = 'Path_to_generalized_ssd\\\_src\\example\\'
+- IM_DIR = os.path.join(DATA_DIR,'Images')
+- SETS_DIR = os.path.join(DATA_DIR,'ImageSets')
+- LABELS_DIR = os.path.join(DATA_DIR,'Annotations')
+- CHECKPOINT_NAME= 'example_model_checkpoint.h5'
+- MODEL_NAME = 'example_model.h5'
+- EPOCHS= 40
+- BATCH_SIZE=16
+- TEST_BATCH_SIZE = 1
+
+
+-DATA_DIR corresponds to the folder containing your data.
+-IM_DIR is the folder containing the images
+-SETS_DIR is the folder containing the sets
+-LABELS_DIR is the folder containing the labels.
+-CHECKPOINT_NAME is the name the intermediary model should be named with. The
+intermediary model is the state of the weights after each epoch.
+-MODEL_NAME is the name of the model that will be saved after training
+-EPOCHS : number of epochs
+-BATCH_SIZE : size of the batch for training
+-TEST_BATCH_SIZE : size of batch size when testing.
 
 Once your configurations are set up, you can go through training and using your models.  
 
@@ -265,3 +267,5 @@ These scripts share commons arguments :
 - model-configuration (-m) : name of the model configuration to use for inference
 - path (-p) : path to the data
 - confidence-threshold (-c) : the confidence threshold used when sorting predictions after inference.
+
+You will then see the results of using the network on your data. You can check the options for saving specifications
