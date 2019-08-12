@@ -157,66 +157,36 @@ Your images need to be organized in a proper way so that the configurations can 
 
 First, get all your images in a folder. For this example, we'll use the \_src/example folder :
 
-example/
-
+  example/
     ├── 000019.jpg
-
     ├── 000044.jpg
-
     ├── 000122.jpg
-
     ├── 000158.jpg
-
     ├── 000215.jpg
-
     ├── 000241.jpg
-
     ├── 000242.jpg
-
     ├── 000325.jpg
-
     ├── 000400.jpg
-
     ├── 000528.jpg
-
     ├── 000605.jpg
-
     ├── 000619.jpg
-
     ├── 000876.jpg
-
     ├── 000908.jpg
-
     ├── 000912.jpg
-
     ├── 001001.jpg
-
     ├── 001015.jpg
-
     ├── 001072.jpg
-
     ├── 001156.jpg
-
     ├── 001233.jpg
-
     ├── 001260.jpg
-
     ├── 001553.jpg
-
     ├── 001607.jpg
-
     ├── 001669.jpg
-
     ├── 001732.jpg
-
     ├── 001747.jpg
-
     ├── 001888.jpg
-
     ├── 001927.jpg
-
     ├── 001982.jpg
-
     └── 002067.jpg
 
 Those are images extracted from the PascalVOC 2007 devkit. They are not yet under the PascalVOC architecture though. This architecture need :
