@@ -34,62 +34,36 @@ It is mandatory that you have a working keras environment to use this implementa
 This repository doesn't work out of the box ; you'll have to get the ssd implementation from pierluigiferrari. Download the zip or pull his git and copy/paster all the folders in the src folder.
 
 After this operation, your repository should look like this (folders only):
-.
-├── Configurations
 
-│   ├── config_base_models
-
-│   ├── config_datas
-
-│   └── config_models
-
-├── Dataset Formatting
-
-│   └── labelimg
-
-│       └── data
-
-├── Inference
-
-├── Training
-
-└──\_src
-
-    ├── bounding_box_utils
-
-    ├── data_generator
-
-    ├── eval_utils
-
-    ├── example
-
-    ├── inference_utils
-
-    ├── keras_layers
-
-    ├── keras_loss_function
-
-    ├── misc_utils
-
-    ├── models
-
-    ├── outputs
-
-    ├── ssd_encoder_decoder
-
-    ├── test_utils
-
-    ├── train_utils
-
-    ├── unit_tests
-
-    ├── utils
-
+    .
+    ├── Configurations
+    │   ├── config_base_models
+    │   ├── config_datas
+    │   └── config_models
+    ├── Dataset Formatting
     │   └── labelimg
-
     │       └── data
-
-    └── weights
+    ├── Inference
+    ├── Training
+    └──_src
+      ├── bounding_box_utils
+      ├── data_generator
+      ├── eval_utils
+      ├── example
+      ├── inference_utils
+      ├── keras_layers
+      ├── keras_loss_function
+      ├── misc_utils
+      ├── models
+      ├── outputs
+      ├── ssd_encoder_decoder
+      ├── test_utils
+      ├── train_utils
+      ├── unit_tests
+      ├── utils
+      │   └── labelimg
+      │       └── data
+      └── weights
 
 
 There, you're ready. Be warry of the fact that some calls between files are hardcoded in the scripts. If you ever modifiy this architecture, you might break the calls and get errors. Do this only if you know what you're doing.
@@ -157,7 +131,8 @@ Your images need to be organized in a proper way so that the configurations can 
 
 First, get all your images in a folder. For this example, we'll use the \_src/example folder :
 
-  example/
+    example/
+
     ├── 000019.jpg
     ├── 000044.jpg
     ├── 000122.jpg
