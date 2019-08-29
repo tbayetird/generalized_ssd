@@ -223,15 +223,13 @@ def inference_on_image(model_config,image_path,conf_thresh=0.5):
         current_axis.text(xmin, ymin, label, size='x-large', color='white', bbox={'facecolor':color, 'alpha':1.0})
     plt.show()
 
-#TODO : check parameters
 def inference_on_video(model_config,
                        video_path,
+                       output_directory,
                        Display=True,
-                       change_save_dir=False,
                        confidence_threshold=0.5,
                        tracking=False,
-                       half_bottom_only=False,
-                       ot = ObjectTracker()):
+                       ot=ObjectTracker()):
     '''
     Launches inference from a keras neural network on a video. The output video
     (input + predictions) will be saved in an output folder.
@@ -242,24 +240,38 @@ def inference_on_video(model_config,
         video_path (str) : the path of the video we want to infere on
         DISPLAY (bool, optional) : Whether it should display the images after
         being done or not
-        change_save_dir (bool, optional) : whether we should save the outputs to
-            the output folder root at the root of this file or create an output
-            folder at the source video folder and save it there
         confidence_threshold (float) : should be between 0 and 1 ; threshold for
             the predictions selection
         tracking (bool) : whether we should use our tracking algorithm on the
             predicted rects
-        ot : an object tracker ; initialized if not provided
+        tracking_type : an object tracker type; initialized with 'object' as default
     '''
+
+    # IMPORTS
+    from keras import backend as K
+    from keras.models import load_model
+    from keras.preprocessing import image
+    from keras.optimizers import Adam
+
+    from keras_loss_function.keras_ssd_loss import SSDLoss
+    from keras_layers.keras_layer_AnchorBoxes import AnchorBoxes
+    from keras_layers.keras_layer_DecodeDetections import DecodeDetections
+    from keras_layers.keras_layer_DecodeDetectionsFast import DecodeDetectionsFast
+    from keras_layers.keras_layer_L2Normalization import L2Normalization
+
+    from ssd_encoder_decoder.ssd_output_decoder import decode_detections, decode_detections_fast
+    from data_generator.object_detection_2d_data_generator import DataGenerator
+    from data_generator.object_detection_2d_photometric_ops import ConvertTo3Channels
+    from data_generator.object_detection_2d_geometric_ops import Resize
+    from data_generator.object_detection_2d_misc_utils import apply_inverse_transforms
 
     img_shape=model_config.IMG_SHAPE
     img_height = img_shape[0] # Height of the model input images
     img_width = img_shape[1] # Width of the model input images
     img_channels = img_shape[2] # Number of color channels of the model input images
     normalize_coords = True
-    save_dir = os.path.join(model_config.ROOT_FOLDER,'outputs')
-    if(change_save_dir):
-        save_dir=os.path.join(os.path.dirname(video_path),'outputs')
+    root_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    save_dir = os.path.join(root_folder,'outputs')
     video_name=video_path.split('\\')
     video_name=video_name[-1]
     ###################################
@@ -280,13 +292,12 @@ def inference_on_video(model_config,
     print("[INFO] Processing video stream...")
 
     vs = cv2.VideoCapture(video_path)
-    # (orig_images,input_images,out)=vd.handleVideoStreams(vs,save_dir,video_name,img_width,img_height)
     (orig_images,input_images,out)=vd.handleVideoStreams(vs,save_dir,video_name,img_width,img_height)
     # print('[DEBUG] Number of images : {}'.format(len(orig_images)))
     ###################################
     ### PREDICTING
     ##################################
-    predName='pred_'+video_name
+    predName='pred_'+video_name+'.npy'
     print("[INFO] Predicting results on video stream  ")
     if(fn.exist(save_dir,predName)):
         print("[INFO] Loading pre-existing predictions")
@@ -321,9 +332,6 @@ def inference_on_video(model_config,
     colors = plt.cm.hsv(np.linspace(0, 1, len(classes))).tolist()
     for i in range(len(y_pred_decoded)):
         img=orig_images[i]
-        mid=int(img.shape[0]/2)
-        max = int(img.shape[1])
-        cv2.line(img,(0,mid),(max,mid),(0,255,0),1)
         rects=[]
         for box in y_pred_decoded[i]:
             # Transform the predicted bounding boxes for the 300x300 image to the original image dimensions.
@@ -335,12 +343,9 @@ def inference_on_video(model_config,
             label = '{}: {:.2f}'.format(classes[int(box[0])], box[1])
             cv2.putText(img,label,(xmin,ymin),cv2.FONT_HERSHEY_SIMPLEX,0.5,color,2)
             cv2.rectangle(img,(xmin,ymin),(xmax,ymax),color,2)
-            # TODO : Put this as an option !
-            if half_bottom_only:
-                if ((ymin + (ymax-ymin)/2) > mid):
-                    rects.append((xmin,ymin,xmax,ymax))
+            rects.append((xmin,ymin,xmax,ymax))
 
-        if (tracking):
+        if (tracking==True):
             objects= ot.update(rects)
             numObj=0
             for (objectID,object) in objects.items():
@@ -353,21 +358,20 @@ def inference_on_video(model_config,
                 cv2.FONT_HERSHEY_SIMPLEX,0.5,(40,40,255),2)
                 cv2.circle(img,(centroid[0],centroid[1]),4,(0,255,0),-1)
                 cv2.circle(img,(predictedCentroid[0],predictedCentroid[1]),4,(0,0,255),-1)
-                if half_bottom_only:
-                    cv2.line(img,(centroid[0],centroid[1]),
-                            (predictedCentroid[0],predictedCentroid[1]),(0,0,255))
 
         out.write(img)
 
     ###################################
     ### DISPLAYING RESULTS
     ##################################
-    if(Display):
+    if(Display==True):
         print("[INFO] Displaying results ")
         for i in range(len(y_pred_decoded)):
             img=orig_images[i]
             cv2.imshow("video",img)
             key = cv2.waitKey(50) & 0xFF
+        if(tracking==True):
+            print("Number of objects detected : {}".format(ot.getTotalDetectedCentroids()))
 
     vs.release()
     out.release()

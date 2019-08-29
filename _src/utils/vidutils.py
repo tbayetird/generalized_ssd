@@ -7,7 +7,7 @@ def handleVideoStreams(vs,save_dir,vidName,img_width,img_height):
     orig_images = [] # Store the images here.
     input_images = [] # Store resized versions of the images here.
     ex=False
-    images_stock_name='imstock_'+vidName
+    images_stock_name='imstock_'+vidName+'.npy'
     if(fn.exist(save_dir,images_stock_name)):
         print("[INFO] Loading existing video datas")
         input_images = np.load(os.path.join(save_dir,images_stock_name))
@@ -25,8 +25,9 @@ def handleVideoStreams(vs,save_dir,vidName,img_width,img_height):
         if not ex:
             frame = cv2.resize(frame,(img_width,img_height),interpolation=cv2.INTER_AREA)
             input_images.append(frame)
-    print('     [Debug] Starting array construction ')
-    input_images = np.array(input_images)
+    if not ex:
+        print('     [Debug] Starting array construction ')
+        input_images = np.array(input_images)
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(os.path.join(save_dir,vidName),
                                 fourcc,24.0,(vidShape[1],vidShape[0]))
@@ -53,7 +54,7 @@ def handleTruncatedVideoStreams(vs,save_dir,vidName,img_width,img_height,truncs)
         vidShape=frame.shape[:2]
         frame = cv2.resize(frame,(img_width,img_height),interpolation=cv2.INTER_AREA)
         input_images.append(frame)
-        del frame 
+        del frame
     print('     [Debug] Starting array construction ')
     input_images = np.array(input_images)
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')

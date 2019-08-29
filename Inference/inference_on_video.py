@@ -19,7 +19,7 @@ ap.add_argument("-d", "--display", required=False,
     default=True,
     help=" Boolean ; True if you want to display all the results, False else. initialized with True")
 ap.add_argument("-o", "--output-directory", required=False,
-    help=" directory where to output the video with detections. Default will be in the directory the input video is stored in")
+    help=" directory where to output the video with detections. Default will be in _src/outputs")
 ap.add_argument("-t", "--tracking", required=False,
     default="False",
     help=" Boolean ; True if you want to apply a tracking algorithm on the video output. Initialized with False")
@@ -30,10 +30,10 @@ from utils.generateconfig import get_model_config_from_name
 
 model_configuration=get_model_config_from_name(args['model_configuration'])
 inference_on_video(
-                    model_configuration,
-                    args['path'],
-                    args['display'],
-                    args['output_directory'],
-                    args['confidence_threshold'],
-                    args['tracking'],
+                    model_config=model_configuration,
+                    video_path=args['path'],
+                    Display=args['display'],
+                    output_directory=args['output_directory'],
+                    confidence_threshold=args['confidence_threshold'],
+                    tracking=args['tracking']]
 )
