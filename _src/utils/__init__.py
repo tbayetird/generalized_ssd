@@ -9,3 +9,5 @@ from . import boxutils
 from . import objects
 from . import objecttracker
 from . import filenav
+from . import customobjectforvehicletracking
+from . import customvehicletracker

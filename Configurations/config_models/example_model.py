@@ -1,3 +1,3 @@
-PATH ='D:\\workspace\\object-detection\\generalized-single-shot-detector\\_src\\models\\example_model.h5'
+PATH ='D:\\workspace\\generalized_ssd\\_src\\models\\example_model.h5'
 IMG_SHAPE = [300,300,3]
-CLASSES = ['background','chat']
+CLASSES = ['background','cat']

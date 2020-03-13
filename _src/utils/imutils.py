@@ -20,8 +20,14 @@ def decompose(im,im_path,height,width):
         for j in range(int(w/width)):
             hmin = i*height
             hmax = (i+1)*height
+            if (hmax>h):
+                hmax = h
+                hmin = h - height
             wmin = j*width
             wmax = (j+1)*width
+            if wmax > w :
+                wmax = w
+                wmin = w - width
             img_name=im_path +'_{}_{}.jpg'.format(i,j)
             cv2.imwrite(img_name,im[hmin:hmax,wmin:wmax,:])
             # cv2.imshow('decomposed image ({},{})'.format(i,j),im[hmin:hmax,wmin:wmax,:])
@@ -45,4 +51,4 @@ def subdivise_image_folder(im_dir,height,width):
         decompose(im,imgs_name[i],height,width)
         os.system("del {}".format(imgs_name[i]))
 
-subdivise_image_folder('D:\\datas\\pirogues-plage\\Images',512,512)
+subdivise_image_folder('D:\\theo\\datas\\pirogues-plage\\Images_decoupees_820x1024',820,1024)
