@@ -25,6 +25,8 @@ def handleVideoStreams(vs,save_dir,vidName,img_width,img_height):
         if not ex:
             frame = cv2.resize(frame,(img_width,img_height),interpolation=cv2.INTER_AREA)
             input_images.append(frame)
+    if vid_count==0:
+        print(' [BUG] Video not found - you should check your paths ')
     if not ex:
         print('     [Debug] Starting array construction ')
         input_images = np.array(input_images)

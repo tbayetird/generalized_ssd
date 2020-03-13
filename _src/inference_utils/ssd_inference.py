@@ -192,11 +192,11 @@ def inference_on_image(model_config,image_path,conf_thresh=0.5):
     input_images.append(img)
     input_images = np.array(input_images)
     y_pred = model.predict(input_images)
-    confidence_threshold = conf_thresh
+    confidence_threshold = float(conf_thresh)
     y_pred_thresh = [y_pred[k][y_pred[k,:,1] > confidence_threshold] for k in range(y_pred.shape[0])]
 
     y_pred_decoded=decode_detections(y_pred,
-                                   confidence_thresh=conf_thresh,
+                                   confidence_thresh=confidence_threshold,
                                    iou_threshold=0.4,
                                    top_k=200,
                                    normalize_coords=normalize_coords,
